@@ -1,0 +1,21 @@
+{
+  "name": "vodu",
+  "module": "server/index.mjs",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "bun run server/index.ts",
+    "dev": "bun --watch server/index.ts",
+    "build": "bun build server/index.ts --outdir=dist --target=net6.0 --external:ws --external:rtc-sdk --external:nlohmann-json",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "websocket": "^1.0.35"
+  }
+}

@@ -18,13 +18,15 @@ namespace settings {
             std::exit(EXIT_FAILURE);
         }
 
+
         for (std::string iceServerAddr: iceServersAddrs){
             continue;
             settings::rtcConfig.iceServers.emplace_back(iceServerAddr);
         }
 
-        for (int i=0; i < wsServersAddrs->size(); i++){
-            continue;
+
+
+        for (int i = 0; i < 3; i++) {
             std::string wsServerAddr = wsServersAddrs[i];
             if (wsServerAddr.find("://") == std::string::npos){
                 continue;
@@ -38,6 +40,7 @@ namespace settings {
             }
 
         }
+        
 
 
         return 0;

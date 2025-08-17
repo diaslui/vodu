@@ -15,6 +15,7 @@ add_executable(vodu
     src/main.cpp
     src/utils.cpp
     src/settings.cpp
+    src/network.cpp
 )
 
-target_link_libraries(vodu PRIVATE datachannel)
+target_link_libraries(vodu PRIVATE datachannel nlohmann_json::nlohmann_json)
