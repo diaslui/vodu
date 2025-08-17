@@ -6,15 +6,19 @@
 
 int main(){
 
-   settings::load();
+    settings::load();
 
     std::cout << settings::SYSTEM_NAME;
 
     Network thisNetwork;
 
-    auto futureConn = thisNetwork.wsConnect();
-    futureConn.wait();
+    thisNetwork.wsConnect();
 
+    while (true)
+    {
+        /* code */
+    }
+    
     
 
     return 0;

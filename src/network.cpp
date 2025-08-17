@@ -9,30 +9,30 @@ Network::Network()
         this->wsHandler();
       }
 
-std::future<void> Network::wsConnect() {
-    auto future = wsPromise->get_future();
+void Network::wsConnect() {
     wsClient->open(settings::wsServersAddrs[0]);
-    return future;
+    this->wsPromise->get_future().wait();
+
 }
 
 void Network::wsHandler() {
     wsClient->onOpen([this]() {
         std::cout << "WS:: connected" << std::endl;
-        wsPromise->set_value();
+        wsClient->send("ping");
+        this->wsPromise->set_value();
     });
 
     wsClient->onError([this](std::string s) {
         std::cerr << "\n WS:: Error: " << s << "\n";
-        wsPromise->set_exception(std::make_exception_ptr(std::runtime_error(s)));
+        this->wsPromise->set_exception(std::make_exception_ptr(std::runtime_error(s)));
     });
 
     wsClient->onClosed([]() {
         std::cout << "WS:: Conn Closed\n";
     });
 
-    auto config = settings::rtcConfig;
 
-    wsClient->onMessage([this, config](auto data) {
+    wsClient->onMessage([this](auto data) {
         if (!std::holds_alternative<std::string>(data)) {
             return;
         }

@@ -24,11 +24,8 @@ extern std::string randomId(size_t length);
 class Network {
 public:
     Network();
-
-    std::future<void> wsConnect();
-
+    void wsConnect();
     
-
 private:
     void wsHandler();
     std::shared_ptr<rtc::WebSocket> wsClient;

@@ -1,62 +1,25 @@
-import http from 'http';
-import { server as WebSocketServer, request as WebSocketRequest, connection as WebSocketConnection, IMessage } from 'websocket';
+import WebSocket, { WebSocketServer } from 'ws';
+const PORT = 8000;
 
-interface Clients {
-    [id: string]: WebSocketConnection;
-}
+const wss = new WebSocketServer({ port: PORT });
 
-const clients: Clients = {};
+wss.on('connection', (ws: WebSocket) => {
+  console.log('new client connected');
 
-const httpServer = http.createServer((req, res) => {
-    console.log(`${req.method?.toUpperCase()} ${req.url}`);
+  ws.on('message', (message: string) => {
+    const incomingMessage = message.toString();
+    console.log(`rcv msg: ${incomingMessage}`);
+    if (incomingMessage === 'ping') {
+      ws.send('pong');
+      console.log('pong');
+    }
+  });
 
-    const respond = (code: number, data: string, contentType = 'text/plain') => {
-        res.writeHead(code, {
-            'Content-Type': contentType,
-            'Access-Control-Allow-Origin': '*',
-        });
-        res.end(data);
-    };
+  ws.on('close', () => {
+    console.log('client disconnected.');
+  });
 
-    respond(404, 'Not Found');
+  ws.on('error', (error: Error) => {
+    console.error('ws error:', error);
+  });
 });
-
-const wsServer = new WebSocketServer({ httpServer });
-wsServer.on('request', (req: WebSocketRequest) => {
-    console.log(`WS  ${req.resource}`);
-
-    const { path } = req.resourceURL;
-    const splitted = path.split('/');
-    splitted.shift();
-    const id = splitted[0];
-
-    const conn = req.accept(null, req.origin);
-    conn.on('message', (data: IMessage) => {
-        if (data.type === 'utf8') {
-            console.log(`Client ${id} << ${data.utf8Data}`);
-
-            const message = JSON.parse(data.utf8Data as string) as { id: string; [key: string]: any };
-            const destId = message.id;
-            const dest = clients[destId];
-            if (dest) {
-                message.id = id;
-                const msgData = JSON.stringify(message);
-                console.log(`Client ${destId} >> ${msgData}`);
-                dest.send(msgData);
-            } else {
-                console.error(`Client ${destId} not found`);
-            }
-        }
-    });
-    conn.on('close', () => {
-        delete clients[id];
-        console.error(`Client ${id} disconnected`);
-    });
-
-    clients[id] = conn;
-});
-
-const endpoint = process.env.PORT || '8000';
-const splitted = endpoint.split(':');
-const port = Number(splitted.pop());
-const hostname = splitted.join(':') || '127.0.0.1';

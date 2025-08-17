@@ -5,7 +5,7 @@
 namespace settings {
     const std::string SYSTEM_NAME = voduUtils::getOsNameString();
     std::string iceServersAddrs[3] = {"stun:stun.l.google.com:19302", "", ""};
-    std::string wsServersAddrs[3] = {"wss://demo.piesocket.com/v3/channel_123?api_key=VCXCEuvhGcBDP7XhiJJUDvR1e1D3eiVjgZ9VRiaV&notify_self", "", ""};
+    std::string wsServersAddrs[3] = {"ws://127.0.0.1:8000", "", ""};
     rtc::Configuration rtcConfig;
     bool usesHTTPS = true;
 
@@ -27,6 +27,7 @@ namespace settings {
 
 
         for (int i = 0; i < 3; i++) {
+            continue;
             std::string wsServerAddr = wsServersAddrs[i];
             if (wsServerAddr.find("://") == std::string::npos){
                 continue;
