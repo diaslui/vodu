@@ -1,8 +1,11 @@
 #include "rtc/rtc.hpp"
+#include "settings.h"
 #include <iostream>
 
-int main(){
 
-    std::cout << "hello wrld!";
+int main(){
+    settings::load();
+    std::cout << settings::SYSTEM_NAME;
+ 
     return 0;
 }

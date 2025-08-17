@@ -13,6 +13,8 @@ FetchContent_MakeAvailable(libdatachannel)
 
 add_executable(vodu
     src/main.cpp
+    src/utils.cpp
+    src/settings.cpp
 )
 
 target_link_libraries(vodu PRIVATE datachannel)
