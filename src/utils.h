@@ -1,9 +1,9 @@
+#ifndef UTILS_H_
+#define UTILS_H_
 
 #include <string>
 
 #pragma once
-
-
 namespace voduUtils {
     
 enum class OsName {
@@ -20,3 +20,5 @@ enum class OsName {
     std::string getOsNameString();
 
 }
+
+#endif
