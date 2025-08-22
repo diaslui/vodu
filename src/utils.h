@@ -2,6 +2,8 @@
 #define UTILS_H_
 
 #include <string>
+#include <chrono>
+
 
 #pragma once
 namespace voduUtils {
@@ -18,6 +20,7 @@ enum class OsName {
 
     OsName getOsNameEnum();
     std::string getOsNameString();
+    std::string randomId(size_t length);
 
 }
 

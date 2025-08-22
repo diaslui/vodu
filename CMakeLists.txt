@@ -18,4 +18,18 @@ add_executable(vodu
     src/network.cpp
 )
 
+if(WIN32)
+    target_sources(
+        vodu PRIVATE 
+        
+        src/platform/windows/platformApi.cpp
+
+    )
+elseif(UNIX)
+    target_sources(
+        vodu PRIVATE
+        src/platform/linux/platformApi.cpp
+        )
+endif()
+
 target_link_libraries(vodu PRIVATE datachannel nlohmann_json::nlohmann_json)

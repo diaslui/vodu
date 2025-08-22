@@ -25,6 +25,7 @@ class Network {
 public:
     Network();
     void wsConnect();
+    void sendToServer(rtc::message_variant msg);
     
 private:
     void wsHandler();

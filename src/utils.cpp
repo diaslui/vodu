@@ -1,6 +1,12 @@
+#include <iostream>
 
 #include "utils.h"
 #include <string>
+
+
+#include <algorithm>
+#include <memory>
+#include <random>
 
 namespace voduUtils {
     
@@ -39,6 +45,19 @@ std::string getOsNameString(){
     #else
     return "";
     #endif
+}
+
+
+std::string randomId(size_t length) {
+	using std::chrono::high_resolution_clock;
+	static thread_local std::mt19937 rng(
+	    static_cast<unsigned int>(high_resolution_clock::now().time_since_epoch().count()));
+	static const std::string characters(
+	    "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
+	std::string id(length, '0');
+	std::uniform_int_distribution<int> uniform(0, int(characters.size() - 1));
+	std::generate(id.begin(), id.end(), [&]() { return characters.at(uniform(rng)); });
+	return id;
 }
 
 }

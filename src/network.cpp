@@ -12,7 +12,11 @@ Network::Network()
 void Network::wsConnect() {
     wsClient->open(settings::wsServersAddrs[0]);
     this->wsPromise->get_future().wait();
+    
+}
 
+void Network::sendToServer(rtc::message_variant msg){
+    wsClient ->send(msg);
 }
 
 void Network::wsHandler() {
