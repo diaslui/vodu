@@ -2,6 +2,8 @@
 #include <nlohmann/json.hpp>
 #include "settings.h"
 #include "network.h"
+#include "settings.h"
+#include <map>
 
 Network::Network()
     : wsClient(std::make_shared<rtc::WebSocket>()),
@@ -15,14 +17,26 @@ void Network::wsConnect() {
     
 }
 
-void Network::sendToServer(rtc::message_variant msg){
-    wsClient ->send(msg);
+void Network::sendToServer(const nlohmann::json& msg, const std::string& msgType) {
+    nlohmann::json msgTemplate = {
+        {"connType", "voduclient"},
+        {"msgType", msgType},
+        {"data", msg}
+    };
+
+    wsClient->send(msgTemplate.dump());
 }
 
 void Network::wsHandler() {
     wsClient->onOpen([this]() {
         std::cout << "WS:: connected" << std::endl;
-        wsClient->send("ping");
+       
+
+        this->sendToServer({
+            {"hostname", settings::thisPc().hostname},
+            {"username", settings::thisPc().username}
+        }, "whoami");
+
         this->wsPromise->set_value();
     });
 
@@ -50,6 +64,7 @@ void Network::wsHandler() {
         it = message.find("type");
         if (it == message.end()) return;
         auto type = it->get<std::string>();
+
 
    
     });

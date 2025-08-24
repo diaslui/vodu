@@ -12,7 +12,7 @@ int main(){
     std::cout << platformApi::getUsername();
     std::cout << platformApi::getHostname();
 
-    std::cout << settings::SYSTEM_NAME;
+    std::cout << settings::thisPc().systemName;
 
     Network thisNetwork;
 

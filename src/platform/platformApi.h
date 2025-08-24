@@ -6,9 +6,9 @@
 #pragma once
 
 namespace platformApi{
-
-    std::string getHostname();
-    std::string getUsername();
+    
+std::string getHostname();
+std::string getUsername();
 
 }
 

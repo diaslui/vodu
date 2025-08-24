@@ -1,9 +1,19 @@
 #include "settings.h"
 #include "utils.h"
 #include <iostream>
+#include "platform/platformApi.h"
 
 namespace settings {
     const std::string SYSTEM_NAME = voduUtils::getOsNameString();
+    const pcdefs& thisPc() {
+    static const pcdefs pc{
+        platformApi::getHostname(),
+        platformApi::getUsername(),
+        voduUtils::getOsNameString()
+    };
+    return pc;
+}
+
     std::string iceServersAddrs[3] = {"stun:stun.l.google.com:19302", "", ""};
     std::string wsServersAddrs[3] = {"ws://127.0.0.1:8000", "", ""};
     rtc::Configuration rtcConfig;

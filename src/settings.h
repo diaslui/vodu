@@ -6,8 +6,14 @@
 #include "rtc/rtc.hpp"
 #include <string>
 
+struct pcdefs {
+    std::string hostname;
+    std::string username;
+    std::string systemName;
+};
+
 namespace settings {
-    extern const std::string SYSTEM_NAME;
+    const pcdefs& thisPc();
     extern std::string iceServersAddrs[3];
     extern std::string wsServersAddrs[3];
     extern rtc::Configuration rtcConfig;

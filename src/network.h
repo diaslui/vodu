@@ -8,6 +8,7 @@
 #include <nlohmann/json.hpp>
 #include "settings.h"
 #include <iostream>
+#include <map>
 
 using std::shared_ptr;
 using std::weak_ptr;
@@ -25,7 +26,7 @@ class Network {
 public:
     Network();
     void wsConnect();
-    void sendToServer(rtc::message_variant msg);
+    void sendToServer(const nlohmann::json& msg, const std::string& msgType);
     
 private:
     void wsHandler();
