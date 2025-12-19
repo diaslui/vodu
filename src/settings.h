@@ -12,8 +12,13 @@ struct pcdefs {
     std::string systemName;
 };
 
+struct programdefs{
+    std::string instanceId;
+};
+
 namespace settings {
     const pcdefs& thisPc();
+    const programdefs& program();
     extern std::string iceServersAddrs[3];
     extern std::string wsServersAddrs[3];
     extern rtc::Configuration rtcConfig;

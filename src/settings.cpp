@@ -11,6 +11,9 @@ namespace settings {
         platformApi::getUsername(),
         voduUtils::getOsNameString()
     };
+    static const programdefs program{
+        platformApi::getprogramid()
+    };
     return pc;
 }
 

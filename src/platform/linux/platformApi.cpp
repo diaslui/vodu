@@ -1,6 +1,7 @@
 #include "../platformApi.h"
 #include <unistd.h>
 #include <limits.h>
+#include <sys/types.h>
 #include <string>
 
 namespace platformApi{
@@ -26,4 +27,8 @@ std::string getUsername(){
         return std::string();
     }
 }
+}
+
+std::string getprogramid(){
+    return std::to_string(getpid());
 }

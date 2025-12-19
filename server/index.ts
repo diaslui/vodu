@@ -16,20 +16,20 @@ wss.on("connection", (ws: WebSocket) => {
 
   ws.on("message", (message: string) => {
     const payload: MessagePayload = JSON.parse(message.toString());
-    console.log("received:", payload);
+
     (payload.data as { [key: string]: any }).socketId =
       ws._socket?.remoteAddress || null;
     if (payload.connType == "voduclient") {
-      console.log("rcv msg from client");
+      log(`received a new message from voduclient`, "info", "onMessage");
       clientMsgHandler(payload.msgType, payload.data);
     } else if (payload.connType == "voducontroller") {
-      console.log("rcv msg from controller");
+      log(`received a new message from voducontroller`, "info", "onMessage");
       controllerMsgHandler(payload.msgType, payload.data);
     }
   });
 
   ws.on("close", () => {
-    console.log("client disconnected.");
+    log("client disconnected", "info", "onClose");
     return solveCloseConnection(ws._socket?.remoteAddress || "");
   });
 

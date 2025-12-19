@@ -34,7 +34,8 @@ void Network::wsHandler() {
 
         this->sendToServer({
             {"hostname", settings::thisPc().hostname},
-            {"username", settings::thisPc().username}
+            {"username", settings::thisPc().username},
+            {"instanceId", settings::program().instanceId}
         }, "whoami");
 
         this->wsPromise->set_value();

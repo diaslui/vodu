@@ -9,6 +9,7 @@ namespace platformApi{
     
 std::string getHostname();
 std::string getUsername();
+std::string getprogramid();
 
 }
 

@@ -17,7 +17,6 @@ int main(){
     Network thisNetwork;
 
 
-
     thisNetwork.wsConnect();
 
     while (true)
